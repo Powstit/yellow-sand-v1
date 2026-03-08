@@ -3,8 +3,6 @@ import { render } from "@react-email/render";
 
 // ── Client ─────────────────────────────────────────────────────────
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM = process.env.EMAIL_FROM ?? "Yellow Sand <noreply@yellowsand.dev>";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
@@ -31,6 +29,7 @@ async function send({
   subject: string;
   template: React.ReactElement;
 }) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const html = await render(template);
 
   const { data, error } = await resend.emails.send({
