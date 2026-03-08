@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -110,7 +110,7 @@ function PaymentForm({
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
-export default function NewTransactionPage() {
+function NewTransactionPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const vehicleId = searchParams.get("vehicle");
@@ -406,5 +406,13 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
       <span className="text-muted-foreground">{label}</span>
       <span className="font-medium">{value}</span>
     </div>
+  );
+}
+
+export default function NewTransactionPage() {
+  return (
+    <Suspense>
+      <NewTransactionPageContent />
+    </Suspense>
   );
 }
